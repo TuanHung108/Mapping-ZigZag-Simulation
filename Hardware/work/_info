@@ -1,0 +1,229 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Source_Code/Redo/Linear_Hardware
+T_opt
+!s110 1787997080
+VGAcFg_2iN0ekDR;8G9?HE1
+04 11 4 work tb_gemm_top fast 0
+=1-581122e5bb87-6a92ab98-1b9-1fb4
+o-quiet -auto_acc_if_foreign -work work +acc
+Z0 tCvgOpt 0
+n@_opt
+OL;O;10.7c;67
+vgemm_controller
+Z1 !s110 1787997076
+!i10b 1
+!s100 ?@WW:ICKUokZVHb_4a=aW1
+Imk>X8=IDZURbVajZd9oU62
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dC:/Source_Code/ZigZag/Gemm_RTL/Hardware
+w1787997063
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_controller.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_controller.v
+L0 1
+Z4 OL;L;10.7c;67
+r1
+!s85 0
+31
+Z5 !s108 1787997076.000000
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_controller.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_controller.v|
+!i113 0
+Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R0
+vgemm_top
+R1
+!i10b 1
+!s100 SkfY_R3Bn]^X8W4F^Om<z3
+INDFPILG^TmkKTbb^E4V=j2
+R2
+R3
+w1787995160
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v|
+!i113 0
+R6
+R0
+vl1_input
+R1
+!i10b 1
+!s100 b8M8z8J]RPSz7^kzC7DSN1
+IS27n0S1A85K>QhJ5ZoS3B1
+R2
+R3
+Z7 w1787996763
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_input.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_input.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_input.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_input.v|
+!i113 0
+R6
+R0
+vl1_output
+R1
+!i10b 1
+!s100 n?7KlYK:5X@jzL0TU[;ec1
+I4<P2;ekSg_4BY`HaOP[R11
+R2
+R3
+Z8 w1787996764
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_output.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_output.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_output.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_output.v|
+!i113 0
+R6
+R0
+vl1_weight
+R1
+!i10b 1
+!s100 :F[Rg:g1H]?kWcP=U5Eg:1
+IE7k7B_:;SZ:llhBJ=>31F3
+R2
+R3
+R7
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v|
+!i113 0
+R6
+R0
+vmemory_access_counter
+R1
+!i10b 1
+!s100 6=eH[RH91e@I`mkH?EX4B3
+IS7RO2zI6J<CM<D3:XGI_;0
+R2
+R3
+R8
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v|
+!i113 0
+R6
+R0
+vpe
+R1
+!i10b 1
+!s100 ^M:O4H@GVY;zmKdIcLh@R1
+IWk[JjJS>SSKOoC2H7L4IC3
+R2
+R3
+R8
+Z9 8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/pe_array.v
+Z10 FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/pe_array.v
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+Z11 !s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/pe_array.v|
+Z12 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/pe_array.v|
+!i113 0
+R6
+R0
+vpe_array
+R1
+!i10b 1
+!s100 ;gV=LGTZQDAdg[nhj;F:03
+I=bGI9IZ8h8emHUakE7VR:3
+R2
+R3
+R8
+R9
+R10
+L0 11
+R4
+r1
+!s85 0
+31
+R5
+R11
+R12
+!i113 0
+R6
+R0
+vreg_o
+R1
+!i10b 1
+!s100 FbYiM>`ElUbaL0`b?;fR<3
+Ib2fc>EjZ=LX8AUc3J=]S51
+R2
+R3
+R8
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v|
+!i113 0
+R6
+R0
+vtb_gemm_top
+R1
+!i10b 1
+!s100 cf8B>7^4^4O_42S7Nh=;Y0
+IzKXkjbjiGl:@Gf6GAJ5MU1
+R2
+R3
+w1787995677
+8C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v
+FC:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v
+L0 3
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v|
+!i113 0
+R6
+R0

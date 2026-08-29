@@ -338,7 +338,6 @@ def pe_array(state, d0, d1, d2_start):
 def compute_spatial_tile(state, t0, t2, t1):
     cfg = state["cfg"]
     stats = state["stats"]
-    memory_access = state["memory_access"]
     reg_o = state["reg_o"]
 
     spatial_tile_d0 = cfg["SPATIAL_TILE_D0"]
@@ -349,6 +348,7 @@ def compute_spatial_tile(state, t0, t2, t1):
 
     d2_start = t2 * spatial_tile_d2
 
+
     for d0_s in range(spatial_tile_d0):
         for d1_s in range(spatial_tile_d1):
 
@@ -358,18 +358,15 @@ def compute_spatial_tile(state, t0, t2, t1):
             spatial_reduction = pe_array(state, d0, d1, d2_start)
 
             if t2 == 0:
-                previous_psum = 0
+                reg_o[d0_s][d1_s] = spatial_reduction
             else:
-                previous_psum = state["l1_output"][d0][d1]
+                reg_o[d0_s][d1_s] += spatial_reduction # accumulate in Reg_O
 
-                stats["l1_to_reg_output_reads"] += 1
-
-            reg_o[d0_s][d1_s] = (previous_psum + spatial_reduction)
             stats["pe_to_reg_output_writes"] += 1
 
-            # Reg_O -> L1
-            state["l1_output"][d0][d1] = reg_o[d0_s][d1_s]
-            stats["reg_to_l1_output_writes"] += 1
+            if t2 == (cfg["NUM_TEMPORAL_TILES_D2"] - 1):
+                state["l1_output"][d0][d1] = reg_o[d0_s][d1_s]
+                stats["reg_to_l1_output_writes"] += 1
 
 
 # ============================================================
@@ -389,6 +386,47 @@ def store_output_to_dram(state):
 
             stats["dram_write_output"] += 1
             stats["ddr_write_bytes"] += cfg["ACC_BYTES"]
+
+
+# ============================================================
+# MAPPING EXECUTION
+# ============================================================
+
+def run_zigzag_mapping(state):
+
+    cfg = state["cfg"]
+
+    # Reset statistics
+    for key in state["stats"]:
+        state["stats"][key] = 0
+
+    for tensor in state["memory_access"]:
+        for level in state["memory_access"][tensor]:
+            for access in level:
+                if access != "memory":
+                    level[access] = 0
+
+
+    state["fsm_state"] = LOAD
+
+    load_input_to_l1(state)
+    load_weight_to_l1(state)
+
+
+    for t0 in range(cfg["NUM_TEMPORAL_TILES_D0"]):
+        for t1 in range(cfg["NUM_TEMPORAL_TILES_D1"]):
+            for t2 in range(cfg["NUM_TEMPORAL_TILES_D2"]):
+                state["fsm_state"] = COMPUTE
+
+                compute_spatial_tile(state, t0, t2, t1)
+
+
+    state["fsm_state"] = STORE
+
+    store_output_to_dram(state)
+
+    state["fsm_state"] = DONE
+
 
 
 def calculate_memory_access(state):
@@ -441,47 +479,6 @@ def calculate_memory_access(state):
     access["O"][1]["wr_in_by_low"] = (o_l1_write_transfers)
     access["O"][1]["rd_out_to_high"] = 0
     access["O"][1]["wr_in_by_high"] = 0
-
-
-# ============================================================
-# MAPPING EXECUTION
-# ============================================================
-
-def run_zigzag_mapping(state):
-
-    cfg = state["cfg"]
-
-    # Reset statistics
-    for key in state["stats"]:
-        state["stats"][key] = 0
-
-    for tensor in state["memory_access"]:
-        for level in state["memory_access"][tensor]:
-            for access in level:
-                if access != "memory":
-                    level[access] = 0
-
-
-    state["fsm_state"] = LOAD
-
-    load_input_to_l1(state)
-    load_weight_to_l1(state)
-
-
-    for t0 in range(cfg["NUM_TEMPORAL_TILES_D0"]):
-        for t2 in range(cfg["NUM_TEMPORAL_TILES_D2"]):
-            for t1 in range(cfg["NUM_TEMPORAL_TILES_D1"]):
-                state["fsm_state"] = COMPUTE
-
-                compute_spatial_tile(state, t0, t2, t1)
-
-
-    state["fsm_state"] = STORE
-
-    store_output_to_dram(state)
-
-    state["fsm_state"] = DONE
-
 
 # ============================================================
 # GOLDEN OUTPUT
@@ -635,7 +632,7 @@ def report(state):
         ["L", "R", "R", "R"]
     )
 
-    print(f"  • Temporal Order : D0 -> D2 -> D1")
+    print(f"  • Temporal Order : D0 -> D1 -> D2")
     print(f"  • PEs            : {cfg['NUM_PE']:,}")
     print(f"  • Reg_O          : {cfg['NUM_REG_O']:,}")
 
