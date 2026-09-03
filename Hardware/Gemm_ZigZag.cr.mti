@@ -1,9 +1,16 @@
-C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v
+C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_controller.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_controller.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
--- Compiling module memory_access_counter
+-- Compiling module gemm_controller
 
 Top level modules:
-	memory_access_counter
+	gemm_controller
+
+} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module tb_gemm_top
+
+Top level modules:
+	tb_gemm_top
 
 } {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_output.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_output.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
@@ -12,12 +19,12 @@ QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
 Top level modules:
 	l1_output
 
-} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/test/tb_gemm_top.v
+} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/memory_access_counter.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
--- Compiling module tb_gemm_top
+-- Compiling module memory_access_counter
 
 Top level modules:
-	tb_gemm_top
+	memory_access_counter
 
 } {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/pe_array.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/pe_array.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
@@ -27,19 +34,12 @@ QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
 Top level modules:
 	pe_array
 
-} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v
+} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
--- Compiling module reg_o
+-- Compiling module gemm_top
 
 Top level modules:
-	reg_o
-
-} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v
-QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
--- Compiling module l1_weight
-
-Top level modules:
-	l1_weight
+	gemm_top
 
 } {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_input.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_input.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
@@ -48,11 +48,18 @@ QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
 Top level modules:
 	l1_input
 
-} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/gemm_top.v
+} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/l1_weight.v
 QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
--- Compiling module gemm_top
+-- Compiling module l1_weight
 
 Top level modules:
-	gemm_top
+	l1_weight
+
+} {} {}} C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v {1 {vlog -work work -vopt -stats=none C:/Source_Code/ZigZag/Gemm_RTL/Hardware/hdl/reg_o.v
+QuestaSim-64 vlog 10.7c Compiler 2018.08 Aug 18 2018
+-- Compiling module reg_o
+
+Top level modules:
+	reg_o
 
 } {} {}}

@@ -11,7 +11,6 @@ OUTPUT_DIR = r"C:\Source_Code\ZigZag\Gemm_RTL\Software"
 
 INPUT_FILE = OUTPUT_DIR + r"\input.hex"
 WEIGHT_FILE = OUTPUT_DIR + r"\weight.hex"
-BIAS_FILE = OUTPUT_DIR + r"\bias.hex"
 GOLDEN_FILE = OUTPUT_DIR + r"\golden_output.hex"
 
 
