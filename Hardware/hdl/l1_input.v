@@ -10,24 +10,33 @@ module l1_input (
 
     output reg  signed [511:0] tile_input_data
 );
-    (*ram_style = "block"*)
-    reg signed [7:0] mem [0:16383];  // 128 x 128 = 16384 INT8
-    
-    integer i, row, lane;
 
-    // 1 beat = 64 elements = 8 elements/D0 x 8 elements/D2 
-    always @(posedge clk) begin
-        if (write_en)
-            for (i = 0; i < 64; i = i + 1)
-                mem[write_beat*64+i] <= write_data[8*i +: 8];
-    end
+    // 8 bank = 8 hàng - mỗi bank lưu 8 phần tử = 8 cột
+    (* ram_style = "block" *)
+    reg [63:0] mem [0:7][0:255];
+    reg [63:0] read_word [0:7];
 
-    // Include address and memory changes.  A sensitivity list containing the
-    // loop variables is incorrect: it leaves tile_input_data stale/X after
-    // the sequential load updates mem.
+    wire [7:0] read_addr = {t0, t2};
+
+    genvar i;
+    generate
+        for (i = 0; i < 8; i = i + 1) begin : BANK_INPUT
+            always @(posedge clk) begin
+                if (write_en) begin
+                    mem[i][write_beat] <= write_data[64*i +: 64];
+                end
+                else begin
+                    read_word[i] <= mem[i][read_addr];
+                end
+            end
+        end
+    endgenerate
+
+    integer row;
     always @(*) begin
+        tile_input_data = 512'd0;
+
         for (row = 0; row < 8; row = row + 1)
-            for (lane = 0; lane < 8; lane = lane + 1)
-                tile_input_data[8*(row*8+lane) +: 8] = mem[((t0*8+row)*128) + (t2*8+lane)];
+            tile_input_data[64*row +: 64] = read_word[row];
     end
 endmodule

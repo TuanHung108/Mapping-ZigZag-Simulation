@@ -10,21 +10,29 @@ module l1_weight (
 
     output reg  signed [511:0] tile_weight_data
 );
-    reg signed [7:0] mem [0:16383];
+    (* ram_style = "block" *)
     
-    integer i, lane, col;
-    
-    // 8 elements/D2 x 8 elements/D1 = 64 elements = 1 beat
-    always @(posedge clk) begin
-        if (write_en)
-            for (i = 0; i < 64; i = i + 1)
-                mem[write_beat*64+i] <= write_data[8*i +: 8];
-    end
-    
-    // Combinational banked read for one 8x8 weight tile.
+    reg [63:0] mem [0:7][0:255];
+    reg [63:0] read_word [0:7];
+
+    wire [7:0] read_addr = {t2, t1};
+
+    genvar bank;
+    generate
+        for (bank = 0; bank < 8; bank = bank + 1) begin : BANK_WEIGHT
+            always @(posedge clk) begin
+                if (write_en)
+                    mem[bank][write_beat] <= write_data[64*bank +: 64];
+                else
+                    read_word[bank] <= mem[bank][read_addr];
+            end
+        end
+    endgenerate
+
+    integer lane;
     always @(*) begin
+        tile_weight_data = 512'd0;
         for (lane = 0; lane < 8; lane = lane + 1)
-            for (col = 0; col < 8; col = col + 1)
-                tile_weight_data[8*(lane*8+col) +: 8] = mem[((t2*8+lane)*128) + (t1*8+col)];
+            tile_weight_data[64*lane +: 64] = read_word[lane];
     end
 endmodule

@@ -17,46 +17,48 @@ module gemm_top (
     input  wire output_rd_ready,
     
     output wire busy,
-    output wire done,
+    output wire done
 
-    // On-chip access; DRAM <-> L1 traffic is excluded.
-    output wire [31:0] stat_pe_input_operand_uses,
-    output wire [31:0] stat_pe_weight_operand_uses,
-    output wire [31:0] stat_l1_input_to_pe_payload_elements,
-    output wire [31:0] stat_l1_weight_to_pe_payload_elements,
-    output wire [31:0] stat_l1_input_to_pe_beats,
-    output wire [31:0] stat_l1_weight_to_pe_beats,
-    output wire [31:0] stat_pe_to_reg_o_writes,
-    output wire [31:0] stat_l1_output_to_reg_o_reads,
-    output wire [31:0] stat_reg_o_to_l1_output_elements,
-    output wire [31:0] stat_reg_o_to_l1_output_beats
+    // output wire [31:0] stat_pe_input_operand_uses,
+    // output wire [31:0] stat_pe_weight_operand_uses,
+    // output wire [31:0] stat_l1_input_to_pe_payload_elements,
+    // output wire [31:0] stat_l1_weight_to_pe_payload_elements,
+    // output wire [31:0] stat_l1_input_to_pe_beats,
+    // output wire [31:0] stat_l1_weight_to_pe_beats,
+    // output wire [31:0] stat_pe_to_reg_o_writes,
+    // output wire [31:0] stat_l1_output_to_reg_o_reads,
+    // output wire [31:0] stat_reg_o_to_l1_output_elements,
+    // output wire [31:0] stat_reg_o_to_l1_output_beats
 );
     wire compute_en;
+    wire output_read_start;
     wire [3:0] t0, t1, t2;
 
     wire [7:0] input_beat, weight_beat, output_beat;
 
     wire signed [511:0] input_tile, weight_tile;
     wire signed [2047:0] psum_tile, completed_tile;
+    wire output_l1_valid;
+    wire output_l1_busy;
     
-    wire start_accept;
-
     gemm_controller u_controller (
         .clk(clk), 
         .rst_n(rst_n), 
         .start(start),
         .input_valid(input_wr_valid), 
         .weight_valid(weight_wr_valid),
+        .output_data_valid(output_l1_valid),
+        .output_data_busy(output_l1_busy),
         .output_ready(output_rd_ready), 
         .input_ready(input_wr_ready),
         .weight_ready(weight_wr_ready), 
         .output_valid(output_rd_valid),
+        .output_read_start(output_read_start),
         .compute_en(compute_en), 
         .t0(t0), .t1(t1), .t2(t2),
         .input_beat(input_beat), 
         .weight_beat(weight_beat), 
         .output_beat(output_beat),
-        .start_accept(start_accept),
         .busy(busy), 
         .done(done)
     );
@@ -97,32 +99,37 @@ module gemm_top (
     );
     
     l1_output u_l1_output (
-        .clk(clk), 
+        .clk(clk),
+        .rst_n(rst_n),
         .write_en(compute_en && (t2 == 4'd15)),
         .t0(t0), 
         .t1(t1), 
         .write_tile(completed_tile), 
+        .read_start(output_read_start),
         .read_beat(output_beat),
-        .read_data(output_rd_data)
+        .read_ready(output_rd_ready),
+        .read_data(output_rd_data),
+        .read_valid(output_l1_valid),
+        .read_busy(output_l1_busy)
     );
 
-    memory_access_counter u_memory_access_counter (
-        .clk(clk),
-        .rst_n(rst_n),
-        .start_accept(start_accept),
-        .compute_tile_en(compute_en),
-        .t2(t2),
-        .pe_input_operand_uses(stat_pe_input_operand_uses),
-        .pe_weight_operand_uses(stat_pe_weight_operand_uses),
-        .l1_input_to_pe_payload_elements(stat_l1_input_to_pe_payload_elements),
-        .l1_weight_to_pe_payload_elements(stat_l1_weight_to_pe_payload_elements),
-        .l1_input_to_pe_beats(stat_l1_input_to_pe_beats),
-        .l1_weight_to_pe_beats(stat_l1_weight_to_pe_beats),
-        .pe_to_reg_o_writes(stat_pe_to_reg_o_writes),
-        .l1_output_to_reg_o_reads(stat_l1_output_to_reg_o_reads),
-        .reg_o_to_l1_output_elements(stat_reg_o_to_l1_output_elements),
-        .reg_o_to_l1_output_beats(stat_reg_o_to_l1_output_beats)
-    );
+    // memory_access_counter u_memory_access_counter (
+    //     .clk(clk),
+    //     .rst_n(rst_n),
+    //     .start_accept(start_accept),
+    //     .compute_tile_en(compute_en),
+    //     .t2(t2),
+    //     .pe_input_operand_uses(stat_pe_input_operand_uses),
+    //     .pe_weight_operand_uses(stat_pe_weight_operand_uses),
+    //     .l1_input_to_pe_payload_elements(stat_l1_input_to_pe_payload_elements),
+    //     .l1_weight_to_pe_payload_elements(stat_l1_weight_to_pe_payload_elements),
+    //     .l1_input_to_pe_beats(stat_l1_input_to_pe_beats),
+    //     .l1_weight_to_pe_beats(stat_l1_weight_to_pe_beats),
+    //     .pe_to_reg_o_writes(stat_pe_to_reg_o_writes),
+    //     .l1_output_to_reg_o_reads(stat_l1_output_to_reg_o_reads),
+    //     .reg_o_to_l1_output_elements(stat_reg_o_to_l1_output_elements),
+    //     .reg_o_to_l1_output_beats(stat_reg_o_to_l1_output_beats)
+    // );
 
 
 endmodule
